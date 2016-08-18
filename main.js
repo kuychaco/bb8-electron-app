@@ -3,11 +3,19 @@ const path = require('path')
 const {app, BrowserWindow, Tray, ipcMain} = require('electron')
 
 const Positioner = require('electron-positioner')
+const sphero = require('sphero')
+
+const bb8 = sphero('d1eaf612c5b14531868d50d7418e1ef1')
+const bb8Commands = require('./bb8-commands')
 
 app.on('ready', () => {
   createTray()
 
-  ipcMain.on('dance', () => console.log('dance BB-8!'))
+  bb8.connect(() => {
+    console.log('BB-8 is ready')
+    bb8.randomColor()
+    ipcMain.on('dance', () => bb8Commands.dance(bb8, mainWindow))
+  })
 })
 
 let tray
