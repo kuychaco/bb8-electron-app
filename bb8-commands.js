@@ -61,5 +61,28 @@ module.exports = {
       bb8.finishCalibration()
     }, 4000)
     mainWindow.webContents.send('sound', 'disco')
+  },
+
+  'say-yes': (bb8, mainWindow) => {
+    console.log('yup yup')
+    bb8.setRawMotors({lmode: 2, lpower: 80, rmode: 2, rpower: 80})
+    setTimeout(() => bb8.setRawMotors({lmode: 1, lpower: 80, rmode: 1, rpower: 80}), 100)
+    setTimeout(() => bb8.setRawMotors({lmode: 2, lpower: 80, rmode: 2, rpower: 80}), 200)
+    setTimeout(() => bb8.setRawMotors({lmode: 1, lpower: 80, rmode: 1, rpower: 80}), 300)
+    setTimeout(() => {
+      bb8.setRawMotors({lmode: 0, lpower: 0, rmode: 0, rpower: 0})
+      bb8.setStabilization(1)
+      bb8.roll(0, 0)
+    }, 400)
+    mainWindow.webContents.send('sound', 'yes')
+  },
+
+  'say-no': (bb8, mainWindow) => {
+    console.log('nope')
+    setTimeout(() => bb8.roll(0,60), 200)
+    setTimeout(() => bb8.roll(0,300), 900)
+    setTimeout(() => bb8.roll(0,60), 1500)
+    setTimeout(() => bb8.roll(0,0), 1500)
+    mainWindow.webContents.send('sound', 'nonono')
   }
 }
