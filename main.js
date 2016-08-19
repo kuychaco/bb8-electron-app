@@ -15,6 +15,7 @@ app.on('ready', () => {
     console.log('BB-8 is ready')
     bb8.randomColor()
     ipcMain.on('dance', () => bb8Commands.dance(bb8, mainWindow))
+    ipcMain.on('disco', () => bb8Commands.disco(bb8, mainWindow))
   })
 })
 

@@ -9,3 +9,7 @@ ipcRenderer.on('sound', (event, sound) => {
 document.getElementById('dance').onclick = () => {
   ipcRenderer.send('dance')
 }
+
+document.getElementById('disco').onclick = () => {
+  ipcRenderer.send('disco')
+}
