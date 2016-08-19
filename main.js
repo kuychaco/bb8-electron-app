@@ -1,11 +1,13 @@
 const path = require('path')
 
-const {app, BrowserWindow, Tray} = require('electron')
+const {app, BrowserWindow, Tray, ipcMain} = require('electron')
 
 const Positioner = require('electron-positioner')
 
 app.on('ready', () => {
   createTray()
+
+  ipcMain.on('dance', () => console.log('dance BB-8!'))
 })
 
 let tray
