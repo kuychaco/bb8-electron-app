@@ -39,7 +39,8 @@ function createWindow () {
     show: false,
     frame: false,
     fullscreenable: false,
-    resizable: false
+    resizable: false,
+    transparent: true
   })
   mainWindow.on('blur', () => mainWindow.hide())
   mainWindow.loadURL(`file://${path.join(__dirname, 'index.html')}`)

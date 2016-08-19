@@ -1,0 +1,101 @@
+body {
+  color: yellow;
+  overflow: hidden;
+  -webkit-user-select: none;
+  cursor: default;
+}
+
+#main-container {
+  text-align: center;
+}
+
+h1 {
+  font-family: 'Star Jedi';
+  font-size: 50px;
+  letter-spacing: 5px;
+  border-bottom: 1px solid yellow;
+  padding-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+#main-container {
+  background-image: url('./images/star-background.jpg');
+  background-size: 300px;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+#content {
+  position: relative;
+  z-index: 1;
+}
+
+button {
+  font-family: 'Star Jedi';
+  letter-spacing: 3px;
+  border: 1px solid yellow;
+  font-size: 30px;
+  display: inline-block;
+  background: transparent;
+  color: yellow;
+  margin: 10px;
+  padding: 5px 15px;
+  cursor: pointer;
+}
+
+button:active {
+  background: rgba(234, 216, 0, 0.36);
+}
+
+button:focus {
+  /* */
+}
+
+#starkiller-base {
+  position: absolute;
+  top: -15px;
+  right: -45px;
+  width: 200px;
+}
+
+#bb8-anim {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+header.toolbar {
+  flex-basis: 22px;
+  position: relative;
+  box-shadow: none;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+header.toolbar:after, header.toolbar:before {
+  bottom: 100%;
+  left: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+header.toolbar:after {
+  border-color: rgba(232, 230, 232, 0);
+  border-bottom-color: black;
+  border-width: 10px;
+  margin-left: -10px;
+}
+header.toolbar:before {
+  border-color: rgba(204, 204, 204, 0);
+  border-bottom-color: black;
+  border-width: 11px;
+  margin-left: -11px;
+  border-bottom-width: 10px;
+}
