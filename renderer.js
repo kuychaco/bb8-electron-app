@@ -11,3 +11,7 @@ document.getElementById('disco').onclick = () => {
 document.getElementById('magic-8-ball').onclick = () => {
   ipcRenderer.send('magic-8-ball')
 }
+
+document.getElementById('tweet').onclick = () => {
+  ipcRenderer.send('tweet')
+}

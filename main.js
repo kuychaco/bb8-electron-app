@@ -22,6 +22,7 @@ app.on('ready', () => {
     ipcMain.on('magic-8-ball', () => {
       Math.random() >= 0.5 ? bb8Commands.sayYes(bb8) : bb8Commands.sayNo(bb8)
     })
+    ipcMain.on('tweet', () => bb8Commands.doWhatTwitterSays(bb8))
   })
 })
 
