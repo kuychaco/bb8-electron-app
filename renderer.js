@@ -21,3 +21,10 @@ document.getElementById('magic-8-ball').onclick = () => {
 document.getElementById('tweet').onclick = () => {
   ipcRenderer.send('tweet')
 }
+
+ipcRenderer.on('tweet-found', (event, {username, imageUrl, text}) => {
+  new Notification(username, {
+    body: text,
+    icon: imageUrl
+  })
+})

@@ -96,16 +96,16 @@ module.exports = {
   },
 
   doWhatTwitterSays: (bb8, mainWindow) => {
-    mainWindow.webContents.send('sound', 'waiting')
     console.log('checking twitter...')
-    setTimeout(() => doTheThing(bb8, mainWindow), 18000)
+    mainWindow.webContents.send('sound', 'waiting')
+    setTimeout(() => doTheThing(bb8, mainWindow), 19000)
   }
 }
 
 function doTheThing (bb8, mainWindow) {
   twitterClient.get('search/tweets', {q: '#bb8electron'}, (error, tweets) => {
     const validCommands = ['dance', 'disco']
-    const messages = tweets.statuses.map(s => s.text.toLowerCase())
+    const messages = tweets.statuses.map(s => s.text)
     for (let i = 0; i < messages.length; i++) {
       const message = messages[i]
       for (let j=0; j < validCommands.length; j++) {
@@ -117,7 +117,10 @@ function doTheThing (bb8, mainWindow) {
           const text = `${username} said to ${command}!`
           console.log(text);
           mainWindow.webContents.send('tweet-found', {username, imageUrl, text})
-          return module.exports[command.replace(/\s/g, '-')](bb8, mainWindow)
+          setTimeout(() => {
+            module.exports[command.replace(/\s/g, '-')](bb8, mainWindow)
+          }, 3500)
+          return
         }
       }
     }
