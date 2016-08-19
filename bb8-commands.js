@@ -81,7 +81,7 @@ module.exports = {
     setTimeout(() => bb8.roll(0,0), 800)
   },
 
-  doWhatTwitterSays: (bb8) => {
+  doWhatTwitterSays: (bb8, mainWindow) => {
     console.log('checking twitter...')
     twitterClient.get('search/tweets', {q: '#bb8 #electrondemo'}, (error, tweets) => {
       const validCommands = ['dance', 'disco', 'say yes', 'say no']
@@ -91,6 +91,7 @@ module.exports = {
         for (let j=0; j < validCommands.length; j++) {
           const command = validCommands[j]
           if (message.includes(command)) {
+            mainWindow.webContents.send('tweet-found', tweets.statuses[i])
             return module.exports[command](bb8)
           }
         }
