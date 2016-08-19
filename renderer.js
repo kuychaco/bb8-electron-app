@@ -1,1 +1,5 @@
-console.log('hello world!');
+const {ipcRenderer} = require('electron')
+
+document.getElementById('dance').onclick = () => {
+  ipcRenderer.send('dance')
+}
