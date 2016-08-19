@@ -1,5 +1,14 @@
 // commands from https://github.com/mintuz/BB8-Commander. Thanks Adam Bulmer!
 
+const Twitter = require('twitter')
+
+const twitterClient = new Twitter({
+    consumer_key: process.env.TWITTER_CONSUMER_KEY,
+    consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+    access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
+    access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
+})
+
 module.exports = {
   dance: (bb8, mainWindow) => {
     console.log("BB-8 got moves!!")
@@ -84,5 +93,33 @@ module.exports = {
     setTimeout(() => bb8.roll(0,60), 1500)
     setTimeout(() => bb8.roll(0,0), 1500)
     mainWindow.webContents.send('sound', 'nonono')
+  },
+
+  doWhatTwitterSays: (bb8, mainWindow) => {
+    mainWindow.webContents.send('sound', 'waiting')
+    console.log('checking twitter...')
+    setTimeout(() => doTheThing(bb8, mainWindow), 18000)
   }
+}
+
+function doTheThing (bb8, mainWindow) {
+  twitterClient.get('search/tweets', {q: '#bb8electron'}, (error, tweets) => {
+    const validCommands = ['dance', 'disco']
+    const messages = tweets.statuses.map(s => s.text.toLowerCase())
+    for (let i = 0; i < messages.length; i++) {
+      const message = messages[i]
+      for (let j=0; j < validCommands.length; j++) {
+        const command = validCommands[j]
+        if (message.includes(command)) {
+          const tweet = tweets.statuses[i]
+          const username = tweet.user.screen_name
+          const imageUrl = tweet.user.profile_image_url
+          const text = `${username} said to ${command}!`
+          console.log(text);
+          mainWindow.webContents.send('tweet-found', {username, imageUrl, text})
+          return module.exports[command.replace(/\s/g, '-')](bb8, mainWindow)
+        }
+      }
+    }
+  })
 }
