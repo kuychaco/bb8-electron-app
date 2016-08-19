@@ -47,5 +47,28 @@ module.exports = {
     }
     const interval = setInterval(nextColor, 33)
     setTimeout(() => clearInterval(interval), 5000)
+  },
+
+  sayYes: (bb8) => {
+    console.log('yup yup')
+    bb8.setRawMotors({lmode: 2, lpower: 80, rmode: 2, rpower: 80})
+    setTimeout(() => bb8.setRawMotors({lmode: 1, lpower: 80, rmode: 1, rpower: 80}), 100)
+    setTimeout(() => bb8.setRawMotors({lmode: 2, lpower: 80, rmode: 2, rpower: 80}), 200)
+    setTimeout(() => bb8.setRawMotors({lmode: 1, lpower: 80, rmode: 1, rpower: 80}), 300)
+    setTimeout(() => {
+      bb8.setRawMotors({lmode: 0, lpower: 0, rmode: 0, rpower: 0})
+      bb8.setStabilization(1)
+    }, 400)
+  },
+
+  sayNo: (bb8) => {
+    console.log('nope')
+    bb8.roll(0,60)
+    setTimeout(() => bb8.roll(0,300), 200)
+    setTimeout(() => bb8.roll(0,60), 400)
+    setTimeout(() => bb8.roll(0,300), 600)
+    setTimeout(() => bb8.roll(0,60), 400)
+    setTimeout(() => bb8.roll(0,300), 600)
+    setTimeout(() => bb8.roll(0,0), 800)
   }
 }

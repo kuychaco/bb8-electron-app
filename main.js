@@ -17,6 +17,11 @@ app.on('ready', () => {
     bb8.randomColor()
     ipcMain.on('dance', () => bb8Commands.dance(bb8))
     ipcMain.on('disco', () => bb8Commands.disco(bb8))
+    ipcMain.on('yes', () => bb8Commands.sayYes(bb8))
+    ipcMain.on('no', () => bb8Commands.sayNo(bb8))
+    ipcMain.on('magic-8-ball', () => {
+      Math.random() >= 0.5 ? bb8Commands.sayYes(bb8) : bb8Commands.sayNo(bb8)
+    })
   })
 })
 
