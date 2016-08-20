@@ -28,6 +28,11 @@ h1 {
   position: relative;
 }
 
+#content {
+  position: relative;
+  z-index: 1;
+}
+
 button {
   font-family: 'Star Jedi';
   letter-spacing: 3px;
