@@ -2,6 +2,8 @@
 
 const Twitter = require('twitter')
 
+const randomTweet = require('./randomTweet')
+
 const twitterClient = new Twitter({
     consumer_key: process.env.TWITTER_CONSUMER_KEY,
     consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
@@ -98,31 +100,18 @@ module.exports = {
   doWhatTwitterSays: (bb8, mainWindow) => {
     console.log('checking twitter...')
     mainWindow.webContents.send('sound', 'waiting')
-    setTimeout(() => doTheThing(bb8, mainWindow), 19000)
-  }
-}
-
-function doTheThing (bb8, mainWindow) {
-  twitterClient.get('search/tweets', {q: '#bb8electron'}, (error, tweets) => {
-    const validCommands = ['dance', 'disco']
-    const messages = tweets.statuses.map(s => s.text)
-    for (let i = 0; i < messages.length; i++) {
-      const message = messages[i]
-      for (let j=0; j < validCommands.length; j++) {
-        const command = validCommands[j]
-        if (message.includes(command)) {
-          const tweet = tweets.statuses[i]
-          const username = tweet.user.screen_name
-          const imageUrl = tweet.user.profile_image_url
-          const text = `${username} said to ${command}!`
-          console.log(text);
-          mainWindow.webContents.send('tweet-found', {username, imageUrl, text})
-          setTimeout(() => {
-            module.exports[command.replace(/\s/g, '-')](bb8, mainWindow)
-          }, 3500)
-          return
+    setTimeout(() => {
+      twitterClient.get('search/tweets', {q: '#bb8electron'}, (error, tweets) => {
+        const validCommands = ['dance', 'disco']
+        const tweet = randomTweet(tweets, validCommands)
+        if (tweet) {
+          mainWindow.webContents.send('tweet-found', tweet)
+          const cmd = () => module.exports[tweet.command](bb8, mainWindow)
+          setTimeout(cmd, 3500)
+        } else {
+          console.log('No tweet found!')
         }
-      }
-    }
-  })
+      })
+    }, 19000)
+  }
 }
