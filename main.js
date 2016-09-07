@@ -63,4 +63,4 @@ function createWindow () {
   mainWindow.loadURL(`file://${path.join(__dirname, 'index.html')}`)
 }
 
-app.dock.hide()
+if ('dock' in app) app.dock.hide()
